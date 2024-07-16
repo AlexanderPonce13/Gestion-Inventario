@@ -107,21 +107,15 @@ export default {
       this.equiposMantenimiento = equipmentData.filter(item => item.status === "mantenimiento").length;
     },
     updateEquipmentLists() {
-  const equipmentData = JSON.parse(localStorage.getItem("equipmentList")) || [];
-  this.recentlyAdded = equipmentData.slice(0, 5);
-  this.maintenance = equipmentData.filter(item => item.status === "mantenimiento").slice(0, 5);
-
-  // Filtrar los equipos más antiguos (antes de 2019)
-  const cutoffDate = new Date("2019-01-01");
-  this.oldest = equipmentData.filter(item => {
-    const acquisitionDate = new Date(item.acquisitionDate);
-    return acquisitionDate < cutoffDate;
-  }).slice(0, 5);
-}
-
+      const equipmentData = JSON.parse(localStorage.getItem("equipmentList")) || [];
+      this.recentlyAdded = equipmentData.slice(0, 5);
+      this.maintenance = equipmentData.filter(item => item.status === "mantenimiento").slice(0, 5);
+      this.oldest = equipmentData.filter(item => new Date(item.acquisitionDate).getFullYear() <= 2019);
+    }
   }
 };
 </script>
+
 
 
 <style scoped>

@@ -1,16 +1,22 @@
 <template>
-  <div class="home">
-    <div class="container">
-      <h1>Bienvenido al Sistema de Inventarios de Equipos Informáticos de la ULEAM</h1>
-      <p>Por favor, inicie sesión para continuar.</p>
-      <div class="images">
-        <img src="@/assets/panel1.jpg" alt="Imagen relacionada con inventarios">
-        <img src="@/assets/panel2.jpg" alt="Imagen relacionada con tecnología">
+  <div class="background-container">
+    <img alt="Fondo" src="@/assets/fondo.jpg" class="background-image">
+    <div class="foreground-container">
+      <div class="home">
+        <div class="container">
+          <h1>Bienvenido al Sistema de Inventarios de Equipos Informáticos de la ULEAM</h1>
+          <p>Por favor, inicie sesión para continuar.</p>
+          <div class="images">
+            <img src="@/assets/panel1.jpg" alt="Imagen relacionada con inventarios">
+            <img src="@/assets/panel2.jpg" alt="Imagen relacionada con tecnología">
+          </div>
+          <router-link to="/login" class="btn">Iniciar Sesión</router-link>
+        </div>
       </div>
-      <router-link to="/login" class="btn">Iniciar Sesión</router-link>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -25,34 +31,43 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
 }
 
-html, body {
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  overflow: hidden; /* Evita barras de desplazamiento en el body */
+  object-fit: cover;
+  z-index: -1;
+}
+
+.foreground-container {
+  position: relative;
+  z-index: 1;
 }
 
 .home {
-  font-family: 'Montserrat', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Ajustado a height en lugar de min-height */
-  margin: 0;
+  height: 100vh;
   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  color: #fff;
 }
 
 .container {
   text-align: center;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.85);
   padding: 2rem;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   border-radius: 12px;
   max-width: 700px;
   width: 90%;
-  box-sizing: border-box;
   animation: fadeIn 1.5s ease-in-out;
-  height: 100%; /* Ajustado a height en lugar de min-height */
 }
 
 @keyframes fadeIn {

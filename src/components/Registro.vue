@@ -135,14 +135,6 @@ export default {
   text-decoration: none;
   font-family: 'Montserrat', sans-serif;
 }
-
-.background-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
 .background-image {
   position: fixed;
   top: 0;
@@ -153,14 +145,7 @@ export default {
   z-index: -1;
 }
 
-.foreground-container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .container {
   background: rgba(255, 255, 255, 0.85);
@@ -168,7 +153,7 @@ export default {
   border-radius: 12px;
   text-align: center;
   animation: fadeIn 1.5s ease-in-out;
-  max-width: 400px;
+  max-width: 600px; /* Ajusta el ancho máximo según sea necesario */
   width: 80%;
   padding: 20px;
   margin: 0 auto;
