@@ -148,7 +148,7 @@ export default {
   max-width: 400px;
   margin: auto;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(14, 13, 13, 0.85);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
@@ -220,7 +220,7 @@ button:hover {
 }
 
 .login-container input:focus {
-  background: #e0e0e0;
+  background: #fdfbfb;
 }
 
 .login-container label {
@@ -239,7 +239,7 @@ button:hover {
   background: linear-gradient(135deg, #007bff, #0056b3);
   font-size: 1.2em;
   font-weight: bold;
-  color: white;
+  color: rgb(19, 18, 18);
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 8px 15px rgba(0, 123, 255, 0.4);
