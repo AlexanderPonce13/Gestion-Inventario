@@ -9,16 +9,16 @@
           <li><a href="/busqueda"><i class="fas fa-search"></i> Buscar</a></li>
           <li><a href="/gestion-equipos"><i class="fas fa-tasks"></i> Gestionar Equipos</a></li>
           <li><a href="/agregar-equipos"><i class="fas fa-tasks"></i> Agregar Equipos</a></li>
-          <li class="sidebar-icon" @click="toggleSidebar"><i class="fas fa-bars"></i></li>
+          <li class="sidebar-icon" @click="toggleSidebar"><i class="fas fa-bars">≡</i></li>
         </ul>
       </nav>
     </header>
 
-    <div :class="['sidebar', { 'sidebar-visible': isSidebarVisible }]">
+    <div :class=" ['sidebar', { 'sidebar-visible': isSidebarVisible }]" >
       <a href="/perfil"><i class="fas fa-user"></i> Perfil</a>
       <a href="/ajustes"><i class="fas fa-cog"></i> Ajustes</a>
       <a href="/ayuda"><i class="fas fa-question-circle"></i> Ayuda</a>
-      <a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+      <a href="/login"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
     </div>
 
     <main>

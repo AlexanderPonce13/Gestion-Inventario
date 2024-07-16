@@ -34,7 +34,7 @@
 
           <div class="additional-options">
             <router-link to="/registro">¿No tienes cuenta? Regístrate aquí</router-link>
-            <router-link to="/olvido-contrasena">¿Olvidaste tu contraseña?</router-link>
+            
           </div>
         </div>
       </div>
@@ -148,7 +148,7 @@ export default {
   max-width: 400px;
   margin: auto;
   padding: 20px;
-  background: rgba(14, 13, 13, 0.85);
+  background: rgba(19, 18, 18, 0.534);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
