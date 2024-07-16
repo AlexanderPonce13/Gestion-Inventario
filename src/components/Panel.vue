@@ -1,9 +1,11 @@
 <template>
   <div id="panel">
     <header>
+      <!-- Sección del logo -->
       <div class="logo">
         <img class="logo-img" src="@/assets/logo-uleam.jpg" alt="Logo Uleam">
       </div>
+      <!-- Navegación principal -->
       <nav>
         <ul>
           <li><a href="/busqueda"><i class="fas fa-search"></i> Buscar</a></li>
@@ -14,15 +16,18 @@
       </nav>
     </header>
 
-    <div :class=" ['sidebar', { 'sidebar-visible': isSidebarVisible }]" >
+    <!-- Barra lateral (sidebar) -->
+    <div :class="['sidebar', { 'sidebar-visible': isSidebarVisible }]">
       <a href="/perfil"><i class="fas fa-user"></i> Perfil</a>
       <a href="/ajustes"><i class="fas fa-cog"></i> Ajustes</a>
       <a href="/ayuda"><i class="fas fa-question-circle"></i> Ayuda</a>
       <a href="/login"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
     </div>
 
+    <!-- Contenido principal -->
     <main>
       <div class="cards-container">
+        <!-- Tarjetas de estadísticas -->
         <section class="card animated">
           <h3>Total de Equipos</h3>
           <p>{{ totalEquipos }}</p>
@@ -35,6 +40,7 @@
           <h3>Equipos en Mantenimiento</h3>
           <p>{{ equiposMantenimiento }}</p>
         </section>
+        <!-- Listas de equipos -->
         <section class="card animated" @click="toggleFullList('recentlyAdded')">
           <h3>Equipos Recientemente Añadidos</h3>
           <div class="list-container">
@@ -55,6 +61,7 @@
         </section>
       </div>
     </main>
+    <!-- Pie de página -->
     <footer>
       <nav class="footer-nav">
         <a href="politica_privacidad.html">Política de Privacidad</a>
@@ -68,32 +75,33 @@
   </div>
 </template>
 
+
 <script>
 export default {
   name: 'PanelControl',
   data() {
     return {
-      isSidebarVisible: false,
-      isModalVisible: false,
-      modalContent: '',
-      totalEquipos: 0,
-      equiposActivos: 0,
-      equiposMantenimiento: 0,
-      recentlyAdded: [],
-      maintenance: [],
-      oldest: []
+      isSidebarVisible: false, // Estado de visibilidad de la barra lateral
+      isModalVisible: false, // Estado de visibilidad del modal
+      modalContent: '', // Contenido del modal
+      totalEquipos: 0, // Total de equipos
+      equiposActivos: 0, // Total de equipos activos
+      equiposMantenimiento: 0, // Total de equipos en mantenimiento
+      recentlyAdded: [], // Lista de equipos recientemente añadidos
+      maintenance: [], // Lista de equipos en mantenimiento
+      oldest: [] // Lista de equipos más antiguos
     };
   },
   mounted() {
-    this.updateMainPageStats();
-    this.updateEquipmentLists();
+    this.updateMainPageStats(); // Actualiza las estadísticas principales al montar el componente
+    this.updateEquipmentLists(); // Actualiza las listas de equipos al montar el componente
   },
   methods: {
     toggleSidebar() {
-      this.isSidebarVisible = !this.isSidebarVisible;
+      this.isSidebarVisible = !this.isSidebarVisible; // Alterna la visibilidad de la barra lateral
     },
     toggleFullList(type) {
-      this.isModalVisible = true;
+      this.isModalVisible = true; // Muestra el modal
       this.modalContent = this[type].map(item => `
         <div class="device-info">
           <p><strong>Nombre:</strong> ${item.equipmentName || 'Nombre no disponible'}</p>
@@ -104,22 +112,22 @@ export default {
           <p><strong>Asignado a:</strong> ${item.assignee || 'No disponible'}</p>
         </div>
         <hr>
-      `).join('');
+      `).join(''); // Genera el contenido del modal basado en el tipo de lista
     },
     closeModal() {
-      this.isModalVisible = false;
+      this.isModalVisible = false; // Cierra el modal
     },
     updateMainPageStats() {
       const equipmentData = JSON.parse(localStorage.getItem("equipmentList")) || [];
-      this.totalEquipos = equipmentData.length;
-      this.equiposActivos = equipmentData.filter(item => item.status === "activo").length;
-      this.equiposMantenimiento = equipmentData.filter(item => item.status === "mantenimiento").length;
+      this.totalEquipos = equipmentData.length; // Calcula el total de equipos
+      this.equiposActivos = equipmentData.filter(item => item.status === "activo").length; // Calcula el total de equipos activos
+      this.equiposMantenimiento = equipmentData.filter(item => item.status === "mantenimiento").length; // Calcula el total de equipos en mantenimiento
     },
     updateEquipmentLists() {
       const equipmentData = JSON.parse(localStorage.getItem("equipmentList")) || [];
-      this.recentlyAdded = equipmentData.slice(0, 5);
-      this.maintenance = equipmentData.filter(item => item.status === "mantenimiento").slice(0, 5);
-      this.oldest = equipmentData.filter(item => new Date(item.acquisitionDate).getFullYear() <= 2019);
+      this.recentlyAdded = equipmentData.slice(0, 5); // Lista de los 5 equipos más recientemente añadidos
+      this.maintenance = equipmentData.filter(item => item.status === "mantenimiento").slice(0, 5); // Lista de los 5 equipos en mantenimiento
+      this.oldest = equipmentData.filter(item => new Date(item.acquisitionDate).getFullYear() <= 2019); // Lista de los equipos más antiguos (adquiridos antes de 2019)
     }
   }
 };
@@ -128,6 +136,7 @@ export default {
 
 
 <style scoped>
+/* Estilo del contenedor principal del panel */
 #panel {
   display: flex;
   flex-direction: column;
@@ -138,6 +147,7 @@ export default {
   font-family: 'Roboto', Arial, sans-serif;
 }
 
+/* Estilo del logo en el header */
 .logo img {
   height: 70px;
   width: 70px;
@@ -146,6 +156,7 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Estilo del header */
 header {
   background-color: #b10707;
   display: flex;
@@ -160,6 +171,7 @@ header {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
+/* Estilo de la lista de navegación en el header */
 header nav ul {
   display: flex;
   list-style: none;
@@ -167,10 +179,12 @@ header nav ul {
   margin: 0;
 }
 
+/* Estilo de los elementos de la lista de navegación */
 header nav ul li {
   margin: 0 15px;
 }
 
+/* Estilo de los enlaces de navegación */
 header nav ul li a {
   text-decoration: none;
   color: white;
@@ -178,16 +192,19 @@ header nav ul li a {
   transition: color 0.3s;
 }
 
+/* Efecto hover en los enlaces de navegación */
 header nav ul li a:hover {
   color: #ffcc00;
 }
 
+/* Estilo del icono de la barra lateral en el header */
 header nav .sidebar-icon {
   cursor: pointer;
   color: white;
   font-size: 1.5em;
 }
 
+/* Estilo de la barra lateral (sidebar) */
 .sidebar {
   position: fixed;
   left: -250px; /* Ocultar la barra lateral fuera de la vista */
@@ -198,10 +215,12 @@ header nav .sidebar-icon {
   z-index: 900; /* Asegurar que esté detrás del header */
 }
 
+/* Clase para hacer visible la barra lateral */
 .sidebar-visible {
   left: 0; /* Mostrar la barra lateral */
 }
 
+/* Estilo de los enlaces en la barra lateral */
 .sidebar a {
   color: white;
   text-decoration: none;
@@ -209,6 +228,7 @@ header nav .sidebar-icon {
   padding: 10px;
 }
 
+/* Estilo del contenido principal */
 main {
   flex: 1;
   display: flex;
@@ -218,6 +238,7 @@ main {
   margin-top: 80px; /* Ajustar para que el contenido no quede debajo del header */
 }
 
+/* Estilo del contenedor de tarjetas */
 .cards-container {
   display: flex;
   flex-wrap: wrap;
@@ -225,11 +246,12 @@ main {
   gap: 20px;
 }
 
+/* Estilo de cada tarjeta */
 .card {
   background-color: rgba(158, 12, 12, 0.842);
   border-radius: 10px;
   padding: 20px;
-  width: calc(33.333% - 40px);
+  width: calc(33.333% - 40px); /* Ajustar el ancho de las tarjetas */
   box-sizing: border-box;
   text-align: center;
   color: white;
@@ -237,21 +259,25 @@ main {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
+/* Efecto hover en las tarjetas */
 .card:hover {
   transform: translateY(-10px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
+/* Estilo del título en las tarjetas */
 .card h3 {
   font-size: 1.8em;
   margin-bottom: 10px;
 }
 
+/* Estilo del texto en las tarjetas */
 .card p {
   font-size: 2em;
   margin-top: 10px;
 }
 
+/* Estilo del pie de página */
 footer {
   background-color: #252424;
   color: white;
@@ -263,16 +289,19 @@ footer {
   margin-top: auto;
 }
 
+/* Estilo de los enlaces de navegación en el pie de página */
 footer nav.footer-nav a {
   color: white;
   text-decoration: none;
   margin: 0 10px;
 }
 
+/* Estilo de la sección de contacto en el pie de página */
 footer .contacto p {
   margin: 5px 0;
 }
 
+/* Estilo del modal */
 .modal {
   display: none;
   position: fixed;
@@ -285,6 +314,7 @@ footer .contacto p {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+/* Estilo del contenido del modal */
 .modal-content {
   background-color: #333;
   margin: 10% auto;
@@ -295,6 +325,7 @@ footer .contacto p {
   color: white;
 }
 
+/* Estilo del botón de cierre del modal */
 .close {
   color: #aaa;
   float: right;
@@ -302,6 +333,7 @@ footer .contacto p {
   font-weight: bold;
 }
 
+/* Efecto hover en el botón de cierre del modal */
 .close:hover,
 .close:focus {
   color: white;
@@ -309,10 +341,12 @@ footer .contacto p {
   cursor: pointer;
 }
 
+/* Clase para animaciones */
 .animated {
   animation: fadeIn 1s ease-in-out;
 }
 
+/* Keyframes para la animación de fadeIn */
 @keyframes fadeIn {
   from {
     opacity: 0;

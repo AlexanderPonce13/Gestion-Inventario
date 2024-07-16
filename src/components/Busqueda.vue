@@ -1,89 +1,108 @@
 <template>
-  <div>
+    <div>
+      <!-- Encabezado con logo y navegación -->
       <header>
-          <div class="logo">
-              <img src="../assets/logo-uleam.jpg" alt="Logo Uleam">
-          </div>
-          <nav>
-            <router-link to="/panel"><i class="fas fa-search"></i><b>Inicio</b></router-link>
-            <router-link to="/gestion-equipos"><i class="fas fa-tasks"></i><b> Gestionar Equipos</b></router-link>
-            <router-link to="/agregar-equipos"><i class="fas fa-tasks"></i><b> Agregar Equipos</b></router-link>
-              
-          </nav>
+        <div class="logo">
+          <img src="../assets/logo-uleam.jpg" alt="Logo Uleam">
+        </div>
+        <nav>
+          <!-- Enlaces de navegación usando Router Links -->
+          <router-link to="/panel"><i class="fas fa-search"></i><b>Inicio</b></router-link>
+          <router-link to="/gestion-equipos"><i class="fas fa-tasks"></i><b> Gestionar Equipos</b></router-link>
+          <router-link to="/agregar-equipos"><i class="fas fa-tasks"></i><b> Agregar Equipos</b></router-link>
+        </nav>
       </header>
-
+  
+      <div class="container">
+        <h2>Búsqueda de Equipos</h2>
+        <!-- Formulario de búsqueda -->
+        <form id="searchForm" @submit.prevent="handleSubmit">
+          <div class="form-group">
+            <label for="searchCriteria">Buscar por Nombre, Número de Serie, etc.</label>
+            <!-- Entrada de texto vinculada a v-model -->
+            <input type="text" id="searchCriteria" v-model="searchCriteria" required>
+            <!-- Mensaje de error condicional -->
+            <span class="error-message" v-if="searchCriteriaError">{{ searchCriteriaError }}</span>
+          </div>
+          <!-- Botón de enviar formulario -->
+          <button type="submit">Buscar</button>
+        </form>
+        <!-- Contenedor para mostrar resultados de búsqueda -->
+        <div id="searchResults" class="results-container"></div>
+      </div>
+    </div>
+  </template>
   
 
-      <div class="container">
-          <h2>Búsqueda de Equipos</h2>
-          <form id="searchForm" @submit.prevent="handleSubmit">
-              <div class="form-group">
-                  <label for="searchCriteria">Buscar por Nombre, Número de Serie, etc.</label>
-                  <input type="text" id="searchCriteria" v-model="searchCriteria" required>
-                  <span class="error-message" v-if="searchCriteriaError">{{ searchCriteriaError }}</span>
-              </div>
-              <button type="submit">Buscar</button>
-          </form>
-          <div id="searchResults" class="results-container"></div>
-      </div>
-  </div>
-</template>
-
-<script>
-export default {
-  name : "BusquedaBasica",
-  data() {
+  <script>
+  export default {
+    name: "BusquedaBasica",
+    data() {
       return {
-          searchCriteria: '',
-          searchCriteriaError: '',
-          searchResults: []
+        // Datos del componente
+        searchCriteria: '',         // Criterio de búsqueda
+        searchCriteriaError: '',    // Error de validación del criterio
+        searchResults: []           // Resultados de la búsqueda
       };
-  },
-  methods: {
-
+    },
+    methods: {
+      // Método para navegar a una URL
       navigateTo(url) {
-          window.location.href = url;
+        window.location.href = url;
       },
+      // Método para manejar el envío del formulario
       handleSubmit() {
-          if (this.searchCriteria.trim() === '') {
-              this.searchCriteriaError = 'El criterio de búsqueda es obligatorio.';
-          } else {
-              this.searchCriteriaError = '';
-              const equipmentList = JSON.parse(localStorage.getItem("equipmentList")) || [];
-              const searchCriteria = this.searchCriteria.toLowerCase().trim();
-              
-              const filteredResults = equipmentList.filter(equipment => {
-                  return equipment.serialNumber.toLowerCase().includes(searchCriteria) || 
-                         equipment.equipmentName.toLowerCase().includes(searchCriteria);
-              });
-
-              this.displaySearchResults(filteredResults);
-          }
-      },
-      displaySearchResults(results) {
-          this.searchResults = results;
-
-          const searchResultsContainer = document.getElementById('searchResults');
-          searchResultsContainer.innerHTML = ""; // Limpia los resultados anteriores
-
-          if (results.length === 0) {
-              searchResultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
-              return;
-          }
-
-          const resultList = document.createElement("ul");
-
-          results.forEach(result => {
-              const listItem = document.createElement("li");
-              listItem.textContent = `Número de Serie: ${result.serialNumber}, Nombre del Equipo: ${result.equipmentName}`;
-              resultList.appendChild(listItem);
+        if (this.searchCriteria.trim() === '') {
+          // Validación: si el criterio está vacío
+          this.searchCriteriaError = 'El criterio de búsqueda es obligatorio.';
+        } else {
+          // Resetear el mensaje de error
+          this.searchCriteriaError = '';
+          // Obtener la lista de equipos desde el almacenamiento local
+          const equipmentList = JSON.parse(localStorage.getItem("equipmentList")) || [];
+          const searchCriteria = this.searchCriteria.toLowerCase().trim();
+  
+          // Filtrar resultados basados en el criterio de búsqueda
+          const filteredResults = equipmentList.filter(equipment => {
+            return equipment.serialNumber.toLowerCase().includes(searchCriteria) || 
+                   equipment.equipmentName.toLowerCase().includes(searchCriteria);
           });
-
-          searchResultsContainer.appendChild(resultList);
+  
+          // Mostrar los resultados filtrados
+          this.displaySearchResults(filteredResults);
+        }
+      },
+      // Método para mostrar los resultados de búsqueda en el DOM
+      displaySearchResults(results) {
+        this.searchResults = results;
+  
+        // Obtener el contenedor de resultados de búsqueda
+        const searchResultsContainer = document.getElementById('searchResults');
+        searchResultsContainer.innerHTML = ""; // Limpiar resultados anteriores
+  
+        // Si no hay resultados, mostrar un mensaje
+        if (results.length === 0) {
+          searchResultsContainer.innerHTML = "<p>No se encontraron resultados.</p>";
+          return;
+        }
+  
+        // Crear una lista ul para mostrar los resultados
+        const resultList = document.createElement("ul");
+  
+        // Iterar sobre los resultados y crear elementos li para cada uno
+        results.forEach(result => {
+          const listItem = document.createElement("li");
+          listItem.textContent = `Número de Serie: ${result.serialNumber}, Nombre del Equipo: ${result.equipmentName}`;
+          resultList.appendChild(listItem);
+        });
+  
+        // Agregar la lista de resultados al contenedor
+        searchResultsContainer.appendChild(resultList);
       }
-  }
-};
-</script>
+    }
+  };
+  </script>
+  
 
 <style scoped>
 /* General */

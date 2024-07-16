@@ -1,11 +1,19 @@
 <template>
+  <!-- Contenedor principal de fondo -->
   <div class="background-container">
+    <!-- Imagen de fondo -->
     <img alt="Fondo" src="@/assets/fondo.jpg" class="background-image">
+    
+    <!-- Contenedor del primer plano -->
     <div class="foreground-container">
       <div id="panel">
         <div class="login-container">
+          <!-- Título de inicio de sesión -->
           <h2>Inicio de Sesión</h2>
+          
+          <!-- Formulario de inicio de sesión -->
           <form @submit.prevent="login" id="loginForm">
+            <!-- Campo de entrada para el nombre de usuario -->
             <input
               type="text"
               id="username"
@@ -15,6 +23,7 @@
             />
             <div class="error-message" v-if="usernameError">{{ usernameError }}</div>
 
+            <!-- Campo de entrada para la contraseña -->
             <input
               type="password"
               id="password"
@@ -24,17 +33,19 @@
             />
             <div class="error-message" v-if="passwordError">{{ passwordError }}</div>
 
+            <!-- Checkbox para recordar sesión -->
             <label>
               <input type="checkbox" v-model="rememberMe" /> Recordarme
             </label>
 
+            <!-- Botón para iniciar sesión -->
             <button type="submit">Iniciar Sesión</button>
             <div class="error-message" v-if="generalError">{{ generalError }}</div>
           </form>
 
+          <!-- Opciones adicionales como el enlace para registrarse -->
           <div class="additional-options">
             <router-link to="/registro">¿No tienes cuenta? Regístrate aquí</router-link>
-            
           </div>
         </div>
       </div>
@@ -44,18 +55,19 @@
 
 <script>
 export default {
-  name: 'IniciarSesion',
+  name: 'IniciarSesion', // Nombre del componente
   data() {
     return {
-      username: '',
-      password: '',
-      rememberMe: false,
-      usernameError: '',
-      passwordError: '',
-      generalError: ''
+      username: '', // Nombre de usuario
+      password: '', // Contraseña
+      rememberMe: false, // Estado del checkbox "Recordarme"
+      usernameError: '', // Mensaje de error para el nombre de usuario
+      passwordError: '', // Mensaje de error para la contraseña
+      generalError: '' // Mensaje de error general
     };
   },
   methods: {
+    // Método para manejar el inicio de sesión
     login() {
       this.clearErrors();
 
@@ -95,6 +107,7 @@ export default {
         }
       }
     },
+    // Método para limpiar mensajes de error
     clearErrors() {
       this.usernameError = '';
       this.passwordError = '';
@@ -105,8 +118,9 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'); 
 
+/* Reset de márgenes y paddings, y estilo general */
 * {
   margin: 0;
   padding: 0;
@@ -115,6 +129,7 @@ export default {
   font-family: 'Montserrat', sans-serif;
 }
 
+/* Estilo de la imagen de fondo */
 .background-image {
   position: fixed;
   top: 0;
@@ -122,18 +137,20 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
+  z-index: -1; /* Coloca la imagen de fondo detrás de otros elementos */
 }
 
+/* Contenedor del primer plano */
 .foreground-container {
   position: relative;
-  z-index: 1;
+  z-index: 1; /* Coloca el contenido del primer plano encima de la imagen de fondo */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; /* Ocupa toda la altura de la ventana */
 }
 
+/* Estilo del panel */
 #panel {
   display: flex;
   flex-direction: column;
@@ -144,21 +161,24 @@ export default {
   font-family: 'Roboto', Arial, sans-serif;
 }
 
+/* Estilo del contenedor de inicio de sesión */
 .login-container {
   max-width: 400px;
   margin: auto;
   padding: 20px;
-  background: rgba(19, 18, 18, 0.534);
+  background: rgba(19, 18, 18, 0.534); /* Fondo con transparencia */
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra alrededor del contenedor */
   box-sizing: border-box;
 }
 
+/* Estilo del formulario */
 form {
   display: flex;
   flex-direction: column;
 }
 
+/* Estilo de los campos de entrada y el botón */
 input[type="text"],
 input[type="password"],
 button {
@@ -169,6 +189,7 @@ button {
   border-radius: 4px;
 }
 
+/* Estilo del botón */
 button {
   background-color: #4caf50;
   color: white;
@@ -177,9 +198,10 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #45a049; /* Color del botón al pasar el cursor */
 }
 
+/* Opciones adicionales como enlaces */
 .additional-options {
   margin-top: 15px;
   display: flex;
@@ -195,16 +217,18 @@ button:hover {
   text-decoration: underline;
 }
 
+/* Estilo para los mensajes de error */
 .error {
-  border-color: red;
+  border-color: red; /* Borde rojo para los campos con error */
 }
 
 .error-message {
-  color: red;
+  color: red; /* Texto rojo para los mensajes de error */
   font-size: 0.9em;
   margin-top: 5px;
 }
 
+/* Estilo de los campos de entrada */
 .login-container input {
   width: 100%;
   padding: 15px;
@@ -215,20 +239,22 @@ button:hover {
   font-size: 1em;
   outline: none;
   box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra alrededor de los campos */
   transition: all 0.3s ease;
 }
 
 .login-container input:focus {
-  background: #fdfbfb;
+  background: #fdfbfb; /* Fondo más claro al enfocar */
 }
 
+/* Estilo de la etiqueta del checkbox */
 .login-container label {
   display: block;
   margin: 20px 0;
   color: #555;
 }
 
+/* Estilo de los botones de envío y de acción */
 .login-container button[type="submit"],
 .login-container button[type="button"] {
   width: 100%;
@@ -236,19 +262,19 @@ button:hover {
   margin-top: 20px;
   border: none;
   border-radius: 8px;
-  background: linear-gradient(135deg, #007bff, #0056b3);
+  background: linear-gradient(135deg, #007bff, #0056b3); /* Fondo degradado */
   font-size: 1.2em;
   font-weight: bold;
   color: rgb(19, 18, 18);
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 15px rgba(0, 123, 255, 0.4);
+  box-shadow: 0 8px 15px rgba(0, 123, 255, 0.4); /* Sombra alrededor del botón */
 }
 
 .login-container button[type="submit"]:hover,
 .login-container button[type="button"]:hover {
-  background: linear-gradient(135deg, #0056b3, #003f7f);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 20px rgba(0, 123, 255, 0.6);
+  background: linear-gradient(135deg, #0056b3, #003f7f); /* Fondo degradado al pasar el cursor */
+  transform: translateY(-3px); /* Desplaza ligeramente hacia arriba al pasar el cursor */
+  box-shadow: 0 12px 20px rgba(0, 123, 255, 0.6); /* Aumenta la sombra */
 }
 </style>
