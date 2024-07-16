@@ -9,7 +9,7 @@
       <nav>
         <ul>
           <li><router-link to="busqueda"><i class="fas fa-search"></i> Buscar</router-link></li>
-          <li><router-link to="/gestion-equipos"><i class="fas fa-tasks"></i> Agregar Equipos</router-link></li>
+          <li><router-link to="/gestion-equipos"><i class="fas fa-tasks"></i> Gestionar Equipos</router-link></li>
           <li><router-link to="/agregar-equipos"><i class="fas fa-tasks"></i> Agregar Equipos</router-link></li>
           <li class="sidebar-icon" @click="toggleSidebar"><i class="fas fa-bars">≡</i></li>
         </ul>
