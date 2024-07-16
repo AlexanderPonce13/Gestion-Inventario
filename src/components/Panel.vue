@@ -1,19 +1,26 @@
 <template>
   <div id="panel">
     <header>
-        <div class="logo">
-          <img class="logo-img" src="@/assets/logo-uleam.jpg" alt="Logo Uleam">
-        </div>
-        <nav>
-          <ul>
-            <li><a href="/busqueda"><i class="fas fa-search"></i> Buscar</a></li>
-            <li><a href="/gestion-equipos"><i class="fas fa-tasks"></i> Gestionar Equipos</a></li>
-            <li><a href="/agregar-equipos"><i class="fas fa-tasks"></i> Agregar Equipos</a></li>
-            <li class="sidebar-icon" @click="toggleSidebar"><i class="fas fa-bars"></i></li>
-          </ul>
-        </nav>
-      </header>
-    
+      <div class="logo">
+        <img class="logo-img" src="@/assets/logo-uleam.jpg" alt="Logo Uleam">
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/busqueda"><i class="fas fa-search"></i> Buscar</a></li>
+          <li><a href="/gestion-equipos"><i class="fas fa-tasks"></i> Gestionar Equipos</a></li>
+          <li><a href="/agregar-equipos"><i class="fas fa-tasks"></i> Agregar Equipos</a></li>
+          <li class="sidebar-icon" @click="toggleSidebar"><i class="fas fa-bars"></i></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div :class="['sidebar', { 'sidebar-visible': isSidebarVisible }]">
+      <a href="/perfil"><i class="fas fa-user"></i> Perfil</a>
+      <a href="/ajustes"><i class="fas fa-cog"></i> Ajustes</a>
+      <a href="/ayuda"><i class="fas fa-question-circle"></i> Ayuda</a>
+      <a href="/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+    </div>
+
     <main>
       <div class="cards-container">
         <section class="card animated">
@@ -61,7 +68,6 @@
   </div>
 </template>
 
-
 <script>
 export default {
   name: 'PanelControl',
@@ -83,6 +89,9 @@ export default {
     this.updateEquipmentLists();
   },
   methods: {
+    toggleSidebar() {
+      this.isSidebarVisible = !this.isSidebarVisible;
+    },
     toggleFullList(type) {
       this.isModalVisible = true;
       this.modalContent = this[type].map(item => `
@@ -138,54 +147,67 @@ export default {
 }
 
 header {
-    background-color: #b10707;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    padding: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  }
-  
-  header .logo img {
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  header nav ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  header nav ul li {
-    margin: 0 15px;
-  }
-  
-  header nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  header nav ul li a:hover {
-    color: #ffcc00;
-  }
-  
-  header nav .sidebar-icon {
-    cursor: pointer;
-    color: white;
-    font-size: 1.5em;
-  }
+  background-color: #b10707;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
 
+header nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+header nav ul li {
+  margin: 0 15px;
+}
+
+header nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+  color: #ffcc00;
+}
+
+header nav .sidebar-icon {
+  cursor: pointer;
+  color: white;
+  font-size: 1.5em;
+}
+
+.sidebar {
+  position: fixed;
+  left: -250px; /* Ocultar la barra lateral fuera de la vista */
+  width: 250px;
+  height: 100%;
+  background-color: #333;
+  transition: left 0.3s ease;
+  z-index: 900; /* Asegurar que esté detrás del header */
+}
+
+.sidebar-visible {
+  left: 0; /* Mostrar la barra lateral */
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+}
 
 main {
   flex: 1;
@@ -301,5 +323,4 @@ footer .contacto p {
     transform: translateY(0);
   }
 }
-
 </style>
