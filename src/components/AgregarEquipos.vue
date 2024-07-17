@@ -112,27 +112,33 @@ export default {
   methods: {
     // Método para manejar el envío del formulario
     submitForm() {
-      // Validar la fecha de adquisición para que no sea futura
-      const today = new Date().toISOString().split('T')[0];
-      if (this.form.acquisitionDate > today) {
-        this.errors.acquisitionDate = "La fecha no puede ser futura";
-        return;
-      }
+  // Validar la fecha de adquisición para que no sea futura
+  const today = new Date().toISOString().split('T')[0];
+  if (this.form.acquisitionDate > today) {
+    this.errors.acquisitionDate = "La fecha no puede ser futura";
+    return;
+  }
 
-      // Limpiar mensaje de error si la fecha es válida
-      this.errors.acquisitionDate = "";
+  // Validar que el número de serie no esté repetido
+  let equipmentList = JSON.parse(localStorage.getItem('equipmentList')) || [];
+  if (equipmentList.some(equipment => equipment.serialNumber === this.form.serialNumber)) {
+    this.errors.serialNumber = "El número de serie ya está registrado";
+    return;
+  }
 
-      // Guardar el formulario en localStorage
-      let equipmentList = JSON.parse(localStorage.getItem('equipmentList')) || [];
-      equipmentList.push(this.form);
-      localStorage.setItem('equipmentList', JSON.stringify(equipmentList));
+  // Limpiar mensaje de error si el número de serie es único
+  this.errors.serialNumber = "";
 
-      // Mostrar mensaje de éxito
-      alert("Equipo agregado correctamente");
+  // Guardar el formulario en localStorage
+  equipmentList.push(this.form);
+  localStorage.setItem('equipmentList', JSON.stringify(equipmentList));
 
-      // Reiniciar el formulario después de enviar
-      this.resetForm();
-    },
+  // Mostrar mensaje de éxito
+  alert("Equipo agregado correctamente");
+
+  // Reiniciar el formulario después de enviar
+  this.resetForm();
+},
     // Método para reiniciar el formulario
     resetForm() {
       this.form = {
